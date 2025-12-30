@@ -1,0 +1,41 @@
+{
+  "name": "very-open-snow",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecdeng/very-open-snow.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ecdeng/very-open-snow/issues"
+  },
+  "homepage": "https://github.com/ecdeng/very-open-snow#readme",
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/luxon": "^3.7.1",
+    "@types/node": "^25.0.3",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "autoprefixer": "^10.4.23",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.562.0",
+    "luxon": "^3.7.2",
+    "next": "^16.1.1",
+    "ngeohash": "^0.6.3",
+    "postcss": "^8.5.6",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3"
+  }
+}
