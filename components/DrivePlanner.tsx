@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Resort } from '@/lib/resorts';
 import { MapPin, Navigation, Clock, TrendingUp } from 'lucide-react';
 import { DateTime } from 'luxon';
+import { Card } from '@/components/ui/Card';
 
 interface DrivePlannerProps {
   resort: Resort;
@@ -124,51 +125,51 @@ export default function DrivePlanner({ resort }: DrivePlannerProps) {
   };
 
   return (
-    <div className="border rounded-lg p-4">
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold mb-2">Your Location</h3>
+    <Card>
+      <div className="mb-6">
+        <h3 className="text-lg font-semibold mb-3 text-gray-900">Your Location</h3>
         {!origin ? (
           <div>
             <button
               onClick={requestLocation}
-              className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+              className="flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors shadow-sm hover:shadow-md w-full sm:w-auto"
             >
-              <Navigation className="w-4 h-4" />
+              <Navigation className="w-5 h-5" />
               Enable Location
             </button>
             {locationError && (
-              <p className="text-red-500 text-sm mt-2">{locationError}</p>
+              <p className="text-red-600 text-sm mt-3">{locationError}</p>
             )}
           </div>
         ) : (
-          <div className="flex items-center gap-2 text-sm text-green-600">
+          <div className="flex items-center gap-2 text-sm text-green-600 bg-green-50 px-4 py-2 rounded-lg border border-green-200">
             <MapPin className="w-4 h-4" />
-            Location enabled ({origin.lat.toFixed(4)}, {origin.lng.toFixed(4)})
+            <span className="font-medium">Location enabled</span>
           </div>
         )}
       </div>
 
       {origin && (
         <>
-          <div className="mb-4">
-            <h3 className="text-lg font-semibold mb-2">When?</h3>
-            <div className="flex gap-2">
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-3 text-gray-900">When?</h3>
+            <div className="flex gap-3">
               <button
                 onClick={() => setMode('now')}
-                className={`px-4 py-2 rounded transition-colors ${
+                className={`flex-1 px-4 py-3 rounded-lg font-medium transition-all ${
                   mode === 'now'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300'
                 }`}
               >
                 Leave Now
               </button>
               <button
                 onClick={() => setMode('tomorrow')}
-                className={`px-4 py-2 rounded transition-colors ${
+                className={`flex-1 px-4 py-3 rounded-lg font-medium transition-all ${
                   mode === 'tomorrow'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300'
                 }`}
               >
                 Tomorrow Morning
@@ -179,20 +180,20 @@ export default function DrivePlanner({ resort }: DrivePlannerProps) {
           <button
             onClick={planDrive}
             disabled={loading}
-            className="w-full bg-green-600 text-white px-4 py-3 rounded font-semibold hover:bg-green-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-green-700 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
           >
             {loading ? 'Calculating...' : 'Plan My Drive'}
           </button>
 
           {error && (
-            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
+            <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
               {error}
             </div>
           )}
 
           {data && data.routes && data.routes.length > 0 && (
-            <div className="mt-6">
-              <h3 className="text-lg font-semibold mb-3">Drive Times</h3>
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              <h3 className="text-lg font-semibold mb-4 text-gray-900">Drive Times</h3>
               <div className="space-y-3">
                 {data.routes.map((route, idx) => {
                   const delay = calculateDelay(
@@ -204,12 +205,12 @@ export default function DrivePlanner({ resort }: DrivePlannerProps) {
                   return (
                     <div
                       key={idx}
-                      className="border rounded p-3 bg-gray-50"
+                      className="border border-gray-200 rounded-lg p-4 bg-gradient-to-r from-gray-50 to-blue-50/30 hover:shadow-md transition-shadow"
                     >
                       <div className="flex justify-between items-start mb-2">
                         <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4 text-gray-600" />
-                          <span className="font-semibold">
+                          <Clock className="w-5 h-5 text-gray-600" />
+                          <span className="font-semibold text-gray-900">
                             {mode === 'now'
                               ? 'Now'
                               : formatDepartureTime(route.departureTime)}
@@ -219,16 +220,16 @@ export default function DrivePlanner({ resort }: DrivePlannerProps) {
                           <div className="text-2xl font-bold text-blue-600">
                             {formatDuration(route.durationSeconds)}
                           </div>
-                          <div className="text-xs text-gray-500">
+                          <div className="text-xs text-gray-500 font-medium">
                             {formatDistance(route.distanceMeters)}
                           </div>
                         </div>
                       </div>
 
                       {delay > 60 && (
-                        <div className="flex items-center gap-1 text-xs text-orange-600">
-                          <TrendingUp className="w-3 h-3" />
-                          +{delayMinutes} min traffic delay
+                        <div className="flex items-center gap-1 text-sm text-orange-600 bg-orange-50 px-2 py-1 rounded-md w-fit">
+                          <TrendingUp className="w-4 h-4" />
+                          <span className="font-medium">+{delayMinutes} min traffic delay</span>
                         </div>
                       )}
                     </div>
@@ -236,13 +237,13 @@ export default function DrivePlanner({ resort }: DrivePlannerProps) {
                 })}
               </div>
 
-              <div className="mt-3 text-xs text-gray-500">
+              <div className="mt-4 text-xs text-gray-500 text-center">
                 Updated {new Date(data.fetchedAt).toLocaleTimeString()} • Source: Google Maps
               </div>
             </div>
           )}
         </>
       )}
-    </div>
+    </Card>
   );
 }
